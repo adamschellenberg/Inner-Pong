@@ -963,6 +963,7 @@ MonoBehaviour:
   enemyScore: 0
   playerScoreText: {fileID: 1538478541}
   enemyScoreText: {fileID: 769834892}
+  ballSprite: {fileID: 937084701}
 --- !u!1 &1133927947
 GameObject:
   m_ObjectHideFlags: 0

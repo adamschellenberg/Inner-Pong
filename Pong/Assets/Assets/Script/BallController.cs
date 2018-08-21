@@ -13,6 +13,8 @@ public class BallController : MonoBehaviour {
 	public Text playerScoreText;
 	public Text enemyScoreText;
 
+	[SerializeField]
+	SpriteRenderer ballSprite;
 
 	private Rigidbody2D rb;
 
@@ -33,6 +35,8 @@ public class BallController : MonoBehaviour {
 
 		playerScoreText.text = playerScore.ToString();
 		enemyScoreText.text = enemyScore.ToString();
+
+		ChangeBallColor ();
 	}
 
 	void StartBall() {
@@ -66,5 +70,23 @@ public class BallController : MonoBehaviour {
 
 		enemyScore = enemyScore + 1;
 		StartBall ();
+	}
+
+	void ChangeBallColor() {
+
+		if(transform.position.x < 0) {
+
+			// change to black
+			ballSprite.color = Color.black;
+
+		}
+
+		if(transform.position.x >= 0) {
+
+			// change to white
+			ballSprite.color = Color.white;
+
+		}
+
 	}
 }
