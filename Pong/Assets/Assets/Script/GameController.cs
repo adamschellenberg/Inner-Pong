@@ -2,41 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
-	int currentPlayerScore;
-	int currentEnemyScore;
+	private int currentPlayerScore;
+	private int currentEnemyScore;
+	private string winner;
 
-	BallController scoreTracker;
-	GameObject score;
+	[SerializeField] private BallController scoreTracker;
+
+	[SerializeField] private Canvas endGameCanvas;
+	[SerializeField] private Text winnerText;
+	[SerializeField] private int goalScore;
+
 
 	// Use this for initialization
-	void Start () {
-		score = GameObject.Find ("Ball");
+	private void Start () {
 
-		scoreTracker = score.GetComponent<BallController> ();
+		endGameCanvas.enabled = false;
 
 	}
 
 	// Update is called once per frame
-	void Update () {
+	private void Update () {
 
 		currentPlayerScore = scoreTracker.playerScore;
 		currentEnemyScore = scoreTracker.enemyScore;
 
-		if (currentPlayerScore == 7) {
+		if (currentPlayerScore == goalScore) {
 			EndGame ();
-			Debug.Log ("Player wins!");
-		} else if (currentEnemyScore == 7) {
+			winner = "White";
+		} else if (currentEnemyScore == goalScore) {
 			EndGame ();
-			Debug.Log ("Player loses!");
+			winner = "Black";
 		}
 
 	}
 
-	void EndGame() {
-		Time.timeScale = 0F;
+	private void EndGame() {
+
+		Time.timeScale = 0;
+		winnerText.text = winner + " wins!";
+		endGameCanvas.enabled = true;
+
+	}
+
+	public void RestartGame() {
+
+		endGameCanvas.enabled = false;
+		Time.timeScale = 1;
+		scoreTracker.ResetScore ();
+	
 	}
 
 }

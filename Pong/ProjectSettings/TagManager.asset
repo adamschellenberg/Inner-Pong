@@ -6,6 +6,7 @@ TagManager:
   tags:
   - EnemyGoal
   - PlayerGoal
+  - Paddle
   layers:
   - Default
   - TransparentFX

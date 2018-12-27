@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class BallController : MonoBehaviour {
 
-	public float moveSpeed;
+
+	[SerializeField] private float moveSpeedBase;
+	private float moveSpeed;
 
 	public int playerScore;
 	public int enemyScore;
@@ -19,7 +21,7 @@ public class BallController : MonoBehaviour {
 	private Rigidbody2D rb;
 
 	// Use this for initialization
-	void Start () {
+	private void Start () {
 
 		rb = gameObject.GetComponent<Rigidbody2D> ();
 
@@ -30,36 +32,36 @@ public class BallController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	private void FixedUpdate () {
 		rb.velocity = moveSpeed * (rb.velocity.normalized);
-
-		playerScoreText.text = playerScore.ToString();
-		enemyScoreText.text = enemyScore.ToString();
 
 		ChangeBallColor ();
 	}
 
-	void StartBall() {
+	private void StartBall() {
 
+		moveSpeed = moveSpeedBase;
 		transform.position = new Vector2 (0.0f, 0.0f);
 		Vector2 startForce = new Vector2 (Random.Range (-360f, 360f), Random.Range (-360f, 360f));
 		rb.AddForce (startForce * moveSpeed);
 
 	}
 
-	void OnTriggerEnter2D(Collider2D col) {
+	private void OnTriggerEnter2D(Collider2D col) {
 
 		if (col.gameObject.tag == "EnemyGoal") {
 			IncreasePlayerScore ();
+			playerScoreText.text = playerScore.ToString();
 		}
 
 		if (col.gameObject.tag == "PlayerGoal") {
 			IncreaseEnemyScore ();
+			enemyScoreText.text = enemyScore.ToString();
 		}
 
 	}
 
-	void IncreasePlayerScore() {
+	private void IncreasePlayerScore() {
 
 		playerScore = playerScore + 1;
 		StartBall ();
@@ -72,7 +74,7 @@ public class BallController : MonoBehaviour {
 		StartBall ();
 	}
 
-	void ChangeBallColor() {
+	private void ChangeBallColor() {
 
 		if(transform.position.x < 0) {
 
@@ -87,6 +89,25 @@ public class BallController : MonoBehaviour {
 			ballSprite.color = Color.white;
 
 		}
+
+	}
+
+	private void OnCollisionEnter2D (Collision2D other) {
+
+		if (other.gameObject.tag == "Paddle") {
+		
+			moveSpeed += .75f;
+		}
+
+	}
+
+	public void ResetScore () {
+	
+		playerScore = 0;
+		playerScoreText.text = playerScore.ToString ();
+		enemyScore = 0;
+		enemyScoreText.text = enemyScore.ToString();
+		StartBall ();
 
 	}
 }
