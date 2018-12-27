@@ -1,6 +1,6 @@
 WebGL
 PlayerPath?
-C:/Users/adams/Documents/GitHub/Inner-Pong/Pong/Build/HTML
+D:/Documents/GITHUB/Inner-Pong/Pong/Build/HTML
 SceneListBegin?
 Assets/Assets/Scene/title.unity
 Assets/Assets/Scene/main.unity
